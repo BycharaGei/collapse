@@ -1,18 +1,14 @@
-const net = require('net');
+const WebSocket = require('ws');
 
-const server = net.createServer((socket) => {
-  console.log('Client connected');
+const wss = new WebSocket.Server({ port: 3000 });
 
-  socket.on('data', (data) => {
-    console.log(`Received message: ${data}`);
-  });
-
-  socket.on('end', () => {
-    console.log('Client disconnected');
+wss.on('connection', function connection(ws) {
+  ws.on('message', function incoming(message) {
+    console.log('received: %s', message);
+    wss.clients.forEach(function each(client) {
+      if (client !== ws && client.readyState === WebSocket.OPEN) {
+        client.send(message);
+      }
+    });
   });
 });
-
-server.listen(3000, () => {
-  console.log('Sa as');
-});
-//
