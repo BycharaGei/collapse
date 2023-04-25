@@ -12,7 +12,7 @@ const server = net.createServer((socket) => {
   });
 });
 
-server.listen(443, () => {
+server.listen(3000, () => {
   console.log('Sa as');
 });
 //
