@@ -1,16 +1,17 @@
-const http = require('http');
-const PORT = 3000;
+const net = require('net');
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
+const server = net.createServer((socket) => {
+  console.log('Client connected');
+
+  socket.on('data', (data) => {
+    console.log(`Received message: ${data}`);
+  });
+
+  socket.on('end', () => {
+    console.log('Client disconnected');
+  });
 });
 
-server.on('connection', (socket) => {
-  console.log(`A client has connected from ${socket.remoteAddress}`);
-});
-
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+server.listen(3000, () => {
+  console.log('Sa as');
 });
