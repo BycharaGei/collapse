@@ -1,12 +1,19 @@
-const http = require('http');
-const PORT = 3000;
+const net = require('net');
 
-const server = http.createServer((req, res) => {
-  res.statusCode = 200;
-  res.setHeader('Content-Type', 'text/plain');
-  res.end('Hello World!');
+const server = net.createServer((socket) => {
+  console.log('Client connected');
+
+  socket.on('data', (data) => {
+    console.log(`Received message: ${data}`);
+  });
+
+  socket.on('end', () => {
+    console.log('Client disconnected');
+  });
 });
 
-server.listen(PORT, () => {
-  console.log(`Server running at http://localhost:${PORT}/`);
+const PORT = 3000;
+
+server.listen(PORT, 'nodejs-production-d353.up.railway.app', () => {
+  console.log('sa as');
 });
